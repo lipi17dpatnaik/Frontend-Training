@@ -1,0 +1,114 @@
+/*html,body{
+min-width:100%;
+widows: 100%;
+height:100%;
+margin:0px;
+padding:0px !important;
+overflow-x:hidden;
+}*/
+
+/*the above is to remove blank spaces on the right*/
+  
+  
+  #header {
+  background-image: linear-gradient(black, red);
+  color: white;
+  overflow: auto;
+  padding-left: 50px;
+  padding-right: 50px;
+  opacity: 1;
+}
+
+/*#header a:hover {opacity: 0.4;}*/
+
+/*#header:hover .ball {
+
+  animation: slide 2s ease-in-out .5s infinite alternate;
+  
+  }
+  
+#header:active .ball {
+  
+  animation-play-state: paused;
+  
+  }*/
+  
+  .logo {
+  float: left;
+  padding: 25px;
+  margin-right: 25px;
+  font-size: 60px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.rightMenu {
+  float: right;
+  color: white;
+  margin-right: 50px;
+  font-size: 20px;
+  margin-top: 30px;
+  
+}
+
+.rightMenu a:hover {
+  background-color: red;
+  color: black;
+}
+
+.videoSection {
+  width: 100%;
+   background: black;
+}
+
+/*.row {
+  font-size: 0;
+  width: 100%;
+}*/
+
+
+.videoBoxes {
+  display: inline-block;
+  background:black;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 300px;
+  /*300,200*/
+  /* min-height: 200px;
+  max-height: 200px; */
+  height: 200px;
+  font-size: 16px;
+  margin: 5px;
+  padding: 25px;
+  color: white;
+  vertical-align: top;
+}
+
+.videoBoxes:hover{
+  background-position: 0 300px;
+  position: relative;
+  background-size: 100% 100%;
+  bottom: 0;
+  opacity: 1;
+}
+
+.videoBoxes:hover .content{
+  opacity:1;
+}
+
+.content{
+  background: black;
+  position: relative;
+  bottom: 0;
+  opacity: 0;
+}
+
+a{
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
