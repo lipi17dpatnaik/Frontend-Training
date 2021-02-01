@@ -1,0 +1,33 @@
+body {
+    font-family: "Arial", sans-serif;
+    background: black;
+    color: white;
+}
+
+section {
+    text-align: center;
+}
+
+.container {
+    display: grid;
+    margin: 50px auto;
+
+}
+
+.cell {
+    font-family: "Permanent Marker", cursive;
+    width: 100px;
+    height: 100px;
+    box-shadow: 5 5 5 2px #e9e2e2;
+    border: 1px solid #ebe0e0;
+    cursor: pointer;
+    background:rgb(0,150,200);
+
+    line-height: 100px;
+    font-size: 60px;
+}
+
+.cell:hover{
+    background: rgb(214, 98, 117);
+
+}
