@@ -8,11 +8,28 @@ let gameContainer;
 
 let gameState;
 
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.pause();
+    }
+}
+
 const winningMessage = () => `Player ${currentPlayer} has won!`;
 const drawMessage = () => `Game ended in a draw!`;
 const currentPlayerTurn = () => `It's ${currentPlayer}'s turn`;
 
 const allBoxesEqual = arr => arr.every(val => val === arr[0]);
+
+const backgroundMusic = new sound("gametheme.mp3");
 
 let winningConditions = [],
     row=[],
@@ -111,6 +128,7 @@ function handleResultValidation() {
     if (roundWon) {
         statusDisplay.innerHTML = winningMessage();
         gameActive = false;
+	backgroundMusic.stop();
         return;
     }
 
@@ -118,6 +136,7 @@ function handleResultValidation() {
     if (roundDraw) {
         statusDisplay.innerHTML = drawMessage();
         gameActive = false;
+	backgroundMusic.stop();
         return;
     }
 
@@ -137,6 +156,8 @@ function handleCellClick(clickedCellEvent) {
 }
 
 function handleRestartGame() {
+    backgroundMusic.stop();
+    backgroundMusic.play();
     gameActive = true;
     currentPlayer = "X";
     gameState = Array.from({length:boardSize*boardSize}).map(x => "");
