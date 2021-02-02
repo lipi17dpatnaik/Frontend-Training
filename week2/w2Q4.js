@@ -8,7 +8,7 @@ Array.prototype.newMap=function(func){
 
 Array.prototype.newForEach=function(func){
   for(let index=0;index<this.length;index++){
-  console.log(func(this[index],index,this));
+  func(this[index],index,this);
   }
 }
 Function.prototype.newBind= function(inArgs){
