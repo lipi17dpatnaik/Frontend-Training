@@ -9,7 +9,7 @@ var variable = 10;
 
 //answer
 //undefined 20
-//how? - variable 10 is not in the scope of the function. Inside the function, because we are using "var variable", it won't throw a reference error when we call console.log(variable). However only the declaration will be hoisted on top and not the value, so it will give undefined. In the next console.log(variable) it will give the output 20.
+//how? - Inside the function, we are use "var variable" so it as hoisted but since it has not been declared yet it is undefined. Had this not been declared, the variable would still have a value of 10. Only the declaration will be hoisted on top and not the value, so it will give undefined. In the next console.log(variable) it will give the output 20.
 
 var variable = 10;
 (()=>{
