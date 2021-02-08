@@ -1,0 +1,194 @@
+html,body{
+min-width:100%;
+widows: 100%;
+height:100%;
+margin:0px;
+padding:0px !important;
+overflow-x:hidden;
+background:black
+}
+
+/*the above is to remove blank spaces on the right*/
+  
+  
+  #header {
+  background: black
+  color: white;
+  overflow: auto;
+  padding-left: 50px;
+  padding-right: 50px;
+  opacity: 1;
+}
+
+/*#header a:hover {opacity: 0.4;}*/
+
+/*#header:hover .ball {
+
+  animation: slide 2s ease-in-out .5s infinite alternate;
+  
+  }
+  
+#header:active .ball {
+  
+  animation-play-state: paused;
+  
+  }*/
+  
+  .logo {
+  float: left;
+  padding: 25px;
+  margin-right: 25px;
+  font-size: 50px;
+  color: red;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.rightMenu {
+  float: right;
+  color: white;
+  margin-right: 50px;
+  font-size: 20px;
+  margin-top: 30px;
+  
+}
+
+.rightMenu a:hover {
+  background-color: red;
+  color: black;
+}
+
+.videoSection {
+  width: 100%;
+   background: black;
+}
+
+/*.row {
+  font-size: 0;
+  width: 100%;
+}*/
+
+
+.videoBoxes {
+  display: inline-block;
+  background:black;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 300px;
+  /*300,200*/
+  /* min-height: 200px;
+  max-height: 200px; */
+  height: 200px;
+  font-size: 16px;
+  margin: 15px;
+  padding: 15px;
+  color: white;
+  vertical-align: top;
+  transition: opacity 1s;
+}
+
+.videoBoxes:hover{
+  position: relative;
+  background-size: 100% 100%;
+  background: red !important;
+  bottom: 0;
+  opacity: 0.7;
+
+}
+
+.videoBoxes:hover .content{
+  opacity:1;
+}
+
+.content{
+  position: relative;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+a{
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: red;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 70%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.videoWrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+}
+.videoWrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.moviePopUp {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height:auto;
+  align-items: stretch;
+}
+
+.moviePopUp > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  padding:10px;
+  margin:5px;
+}
+
+.poster {
+  width:100px;
+  height:100px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
