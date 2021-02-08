@@ -1,6 +1,14 @@
-let jsonURL = "https://demo0376970.mockable.io/movieslist";
+function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}
+
+const jsonURL = "https://demo0376970.mockable.io/movieslist";
 let obj;
 fetch(jsonURL)
+	.then(handleErrors)
 	.then(data => data.json())
 	.then(obj => {
 		const numMovies = obj.shows.length; //gets number of movies
@@ -24,7 +32,14 @@ fetch(jsonURL)
 		colDiv.style.backgroundImage=`url('img/posters/${obj.shows[movieIndex].poster}')`;
 		colDiv.onclick = displayModal;
 	}
-});
+})
+	.catch(error => {
+		console.log(error);
+		const errorBox = document.createElement('div');
+		errorBox.className = 'errorSection';
+		errorBox.innerHTML = `<h3>Oops! Looks like I encountered some issue :( Please try again later!</h3>`;
+		document.body.appendChild(errorBox);
+	});
 
 // Get the modal
 const modal = document.getElementsByClassName("modal")[0];
@@ -33,8 +48,9 @@ let clickedCell;
 
 const displayModal = function() {
   clickedCell = this.childNodes[0];
-  let imdbURL = `http://www.omdbapi.com/?i=${clickedCell.getAttribute('data-imdbid')}&apikey=cb3a6e4b`;
+  const imdbURL = `http://www.omdbapi.com/?i=${clickedCell.getAttribute('data-imdbid')}&apikey=cb3a6e4b`;
   fetch(imdbURL)
+	.then(handleErrors)
 	.then(data => data.json())
 	.then(data => {modal.innerHTML = `<div class="modal-content">
     <div class="moviePopUp">
@@ -48,7 +64,11 @@ const displayModal = function() {
     <iframe class="trailer" width="560" height="349" src="https://www.youtube-nocookie.com/embed/${clickedCell.getAttribute('data-trailer')}?rel=0&amp;amp;controls=0&amp;amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>`;
-	});
+	})
+	.catch(error => {
+                console.log(error);
+                modal.innerHTML = `<h3>Oops! Looks like I encountered some issue :( Please try again later!</h3>`;
+        });
   modal.style.display = "block";
 }
 
