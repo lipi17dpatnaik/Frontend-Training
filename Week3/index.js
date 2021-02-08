@@ -67,7 +67,9 @@ const displayModal = function() {
 	})
 	.catch(error => {
                 console.log(error);
-                modal.innerHTML = `<h3>Oops! Looks like I encountered some issue :( Please try again later!</h3>`;
+                modal.innerHTML = `<div class="errorSection">
+			<h3>Oops! Looks like I encountered some issue :( Please try again later!</h3>
+				</div>`;
         });
   modal.style.display = "block";
 }
