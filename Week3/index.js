@@ -5,6 +5,13 @@ function handleErrors(response) {
     return response;
 }
 
+function displayErrorBox(response,category){
+    const errorBox = document.createElement('div');
+    errorBox.className = 'errorSection';
+    errorBox.innerHTML = `<h1>${category}</h1><h3>${response}</h3>`;
+    return errorBox;
+}
+
 const jsonURL = "https://demo0376970.mockable.io/movieslist";
 let obj;
 fetch(jsonURL)
@@ -12,32 +19,38 @@ fetch(jsonURL)
 	.then(data => data.json())
 	.then(obj => {
 		const numMovies = obj.shows.length; //gets number of movies
-		let movieIndex = 0;
-		const videosec = document.createElement('div');
-		videosec.className = 'videoSection';
-		document.body.appendChild(videosec);
+		// numMovies = 0;
+		if (numMovies === 0){
+			const errorBox = displayErrorBox("Sorry! I couldn't find any movies :(","Oh no!");
+			document.body.appendChild(errorBox);
+		}
+		else{
+			let movieIndex = 0;
+			const videosec = document.createElement('div');
+			videosec.className = 'videoSection';
+			document.body.appendChild(videosec);
+	
+			//dynamicallly create movie boxes
+			for (movieIndex=0; movieIndex<numMovies; movieIndex++){
+			const colDiv=document.createElement('div');
+			colDiv.className='videoBoxes';
+			videosec.appendChild(colDiv);
+			let year = obj.shows[movieIndex].year;
+			let imdbid = obj.shows[movieIndex].imdbID;
+			let trailer = obj.shows[movieIndex].trailer;
+			colDiv.innerHTML = `<div class="content" data-imdbid="${imdbid}" data-trailer="${trailer}"> <h3>${obj.shows[movieIndex].title}</h3>
+			<p>(${year})</p>
+			<p>${obj.shows[movieIndex].description}</p></div></a>`;
 
-		//dynamicallly create movie boxes
-		for (movieIndex=0; movieIndex<numMovies; movieIndex++){
-		const colDiv=document.createElement('div');
-		colDiv.className='videoBoxes';
-		videosec.appendChild(colDiv);
-		let year = obj.shows[movieIndex].year;
-		let imdbid = obj.shows[movieIndex].imdbID;
-		let trailer = obj.shows[movieIndex].trailer;
-		colDiv.innerHTML = `<div class="content" data-imdbid="${imdbid}" data-trailer="${trailer}"> <h3>${obj.shows[movieIndex].title}</h3>
-<p>(${year})</p>
-		<p>${obj.shows[movieIndex].description}</p></div></a>`;
-
-		colDiv.style.backgroundImage=`url('img/posters/${obj.shows[movieIndex].poster}')`;
-		colDiv.onclick = displayModal;
+			colDiv.style.backgroundImage=`url('img/posters/${obj.shows[movieIndex].poster}')`;
+			colDiv.onclick = displayModal;
+			}
+		}
 	}
-})
+)
 	.catch(error => {
 		console.log(error);
-		const errorBox = document.createElement('div');
-		errorBox.className = 'errorSection';
-		errorBox.innerHTML = `<h3>Oops! Looks like I encountered some issue :( Please try again later!</h3>`;
+		const errorBox = displayErrorBox("Looks like I encountered an issue :( Please try again later!","Oops! ERROR");
 		document.body.appendChild(errorBox);
 	});
 
@@ -67,9 +80,8 @@ const displayModal = function() {
 	})
 	.catch(error => {
                 console.log(error);
-                modal.innerHTML = `<div class="errorSection">
-			<h3>Oops! Looks like I encountered some issue :( Please try again later!</h3>
-				</div>`;
+		modal.innerHTML = "";
+		modal.appendChild(displayErrorBox("Looks like I encountered an issue :( Please try again later!","Oops! ERROR"));
         });
   modal.style.display = "block";
 }
