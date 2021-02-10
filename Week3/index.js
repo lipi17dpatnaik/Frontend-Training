@@ -5,10 +5,11 @@ function handleErrors(response) {
     return response;
 }
 
-function displayErrorBox(response,category){
+function displayErrorBox(message,title,bgColor,color){
     const errorBox = document.createElement('div');
     errorBox.className = 'errorSection';
-    errorBox.innerHTML = `<h1>${category}</h1><h3>${response}</h3>`;
+    errorBox.innerHTML = `<h1>${title}</h1><h3 style="color:${color}">${message}</h3>`;
+    errorBox.style.backgroundColor = `${bgColor}`;
     return errorBox;
 }
 
@@ -19,9 +20,9 @@ fetch(jsonURL)
 	.then(data => data.json())
 	.then(obj => {
 		const numMovies = obj.shows.length; //gets number of movies
-		// numMovies = 0;
+		//numMovies = 0;
 		if (numMovies === 0){
-			const errorBox = displayErrorBox("Sorry! I couldn't find any movies :(","Oh no!");
+			const errorBox = displayErrorBox("Sorry! I couldn't find any movies :(","Oh no!","black","white");
 			document.body.appendChild(errorBox);
 		}
 		else{
@@ -50,7 +51,7 @@ fetch(jsonURL)
 )
 	.catch(error => {
 		console.log(error);
-		const errorBox = displayErrorBox("Looks like I encountered an issue :( Please try again later!","Oops! ERROR");
+		const errorBox = displayErrorBox("Looks like I encountered an issue :( Please try again later!","Oops! ERROR","white","black");
 		document.body.appendChild(errorBox);
 	});
 
@@ -67,10 +68,14 @@ const displayModal = function() {
 	.then(data => data.json())
 	.then(data => {modal.innerHTML = `<div class="modal-content">
     <div class="moviePopUp">
+    <div class="poster" style="background-image: url('${data.Poster}');"></div>
+    <div class="movieTitleYearDesc">
+    <div class="movieTitleYear">
     <div class="movieTitle"><h3>${data.Title}</h3></div>
     <div class="year">(${data.Year})</div>
-    <div class="poster" style="background-image: url('${data.Poster}');"></div>
+    </div>
     <div class="description">${data.Plot}</div>
+    </div>
     <div class="imdbRating">${data.Ratings[0].Value}</div>
     </div>
     <div class="videowrapper">
