@@ -13,12 +13,16 @@ function displayErrorBox(message,title,bgColor,color){
     return errorBox;
 }
 
+const loadingBox = displayErrorBox("Please wait while I load some exciting new shows for you!","Loading...","black","white");
+document.body.appendChild(loadingBox);
+
 const jsonURL = "https://demo0376970.mockable.io/movieslist";
 let obj;
 fetch(jsonURL)
 	.then(handleErrors)
 	.then(data => data.json())
 	.then(obj => {
+		removeElements(document.querySelectorAll(".errorSection"));
 		const numMovies = obj.shows.length; //gets number of movies
 		//numMovies = 0;
 		if (numMovies === 0){
