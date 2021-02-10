@@ -62,6 +62,7 @@ let clickedCell;
 
 const displayModal = function() {
   clickedCell = this.childNodes[0];
+  modal.style.display = "block";
   const imdbURL = `http://www.omdbapi.com/?i=${clickedCell.getAttribute('data-imdbid')}&apikey=cb3a6e4b`;
   fetch(imdbURL)
 	.then(handleErrors)
@@ -88,7 +89,6 @@ const displayModal = function() {
 		modal.innerHTML = "";
 		modal.appendChild(displayErrorBox("Looks like I encountered an issue :( Please try again later!","Oops! ERROR"));
         });
-  modal.style.display = "block";
 }
 
 // When the user clicks anywhere outside of the modal, close it
