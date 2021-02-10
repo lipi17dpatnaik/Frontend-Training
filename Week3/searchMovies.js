@@ -12,6 +12,8 @@ const debounce = (func, wait) => {
   };
 };
 
+const removeElements = (elms) => elms.forEach(el => el.remove());
+
 function searchMovies() {
     console.log("Function called");
     //getting data entered in searchbar
@@ -22,6 +24,8 @@ function searchMovies() {
 
     //getting all videoboxes to iterate over
     let videoBoxes = document.getElementsByClassName('videoBoxes'); 
+
+    let countMovies = 0;
     
     //for loop to iterate over 
     for (i = 0; i < videoBoxes.length; i++) {  
@@ -29,9 +33,18 @@ function searchMovies() {
             videoBoxes[i].style.display="none"; //try out hidden,element
         } 
         else { 
-            videoBoxes[i].style.display="inline-block";                  
+            videoBoxes[i].style.display="inline-block";
+	    countMovies += 1;
         } 
     } 
+    if (countMovies === 0)
+    {
+	const errorBox = displayErrorBox("Sorry! I couldn't find any movies :(","Oh no!","black","white");
+        document.body.appendChild(errorBox);
+    }
+    else{
+	removeElements(document.querySelectorAll(".errorSection"));
+    }
 }
 
 const movieInput = document.getElementById("searchbar");
