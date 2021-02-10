@@ -20,20 +20,6 @@ background:black
   opacity: 1;
 }
 
-/*#header a:hover {opacity: 0.4;}*/
-
-/*#header:hover .ball {
-
-  animation: slide 2s ease-in-out .5s infinite alternate;
-  
-  }
-  
-#header:active .ball {
-  
-  animation-play-state: paused;
-  
-  }*/
-  
   .logo {
   float: left;
   padding: 25px;
@@ -62,21 +48,12 @@ background:black
    background: black;
 }
 
-/*.row {
-  font-size: 0;
-  width: 100%;
-}*/
-
-
 .videoBoxes {
   display: inline-block;
   background:black;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 300px;
-  /*300,200*/
-  /* min-height: 200px;
-  max-height: 200px; */
   height: 200px;
   font-size: 16px;
   margin: 15px;
@@ -133,10 +110,10 @@ a{
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: red;
+  background-color: white;
   margin: 15% auto; /* 15% from the top and centered */
   padding: 20px;
-  border: 1px solid #888;
+  border: 2px solid red;
   width: 70%; /* Could be more or less, depending on screen size */
 }
 
@@ -171,9 +148,35 @@ a{
 .moviePopUp {
   display: flex;
   flex-direction: row;
-  justify-content: center;
   height:auto;
   align-items: stretch;
+}
+
+.movieTitleYearDesc {
+  display: flex;
+  flex-direction: column;
+  height:auto;
+  align-items: stretch;
+}
+
+.movieTitleYear {
+  display: flex;
+  flex-direction:row;
+  height:auto;
+  align-items:stretch;
+}
+
+.movieTitle {
+  margin-right: 20px;
+  margin-bottom:20px;
+}
+
+.movieTitle > h3 {
+  display: flex;
+  flex-direction:row;
+  height:auto;
+  align-items:stretch;
+  margin: 0px;
 }
 
 .errorSection {
@@ -185,18 +188,21 @@ a{
   left: 50%;
   margin: -100px 0 0 -150px;
   padding: 50px;
+  font-weight:normal;
+}
+
+.errorSection h3 {
+  font-weight:normal;
 }
 
 .errorSection h1 {
-  background-color:red;
-  color:white;
+  color:red;
+  font-weight:normal;
 }
 
 .moviePopUp > * {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
+  color: black;
   font-family: Arial, Helvetica, sans-serif;
   padding:10px;
   margin:5px;
