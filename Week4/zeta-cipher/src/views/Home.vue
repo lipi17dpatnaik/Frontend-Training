@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HelloWorld v-for="item in items" :key="item.id" :msg="item.title" :prodNo="item.prod" :binNo="item.bin" :cardType="item.card" />
+    <HelloWorld v-for="item in items" :key="item.bin" :msg="item.title" :prodNo="item.prod" :binNo="item.bin" :cardType="item.card" />
   </div>
 </template>
 
@@ -19,17 +19,15 @@ import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
 export default class Home extends Vue {
   private items = [
 	{
-		id:1,
 		title: 'First Product',
 		prod:'PROD000',
 		bin:'123456',
 		card:'visa'
 	},
 	{
-                id:2,
                 title: 'First Product',
                 prod:'PROD000',
-                bin:'123456',
+                bin:'123457',
                 card:'rupay'
         }
   ];
