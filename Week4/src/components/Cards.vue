@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="cardsContainer">
     <div class="card">
       <div class="cardBg" :style="{backgroundColor:bgColor}">
         <div class="cardLogo"><img :src="cardURL" :alt="cardType">
@@ -16,7 +16,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class HelloWorld extends Vue {
+export default class Cards extends Vue {
   @Prop() private msg!: string;
   @Prop() private prodNo!:string;
   @Prop() private binNo!:number;
@@ -39,7 +39,7 @@ export default class HelloWorld extends Vue {
 .cardBg {
   margin:0px;
   background:black;
-  height:50px;
+  height:90px;
   display:flex;
 }
 
@@ -48,7 +48,7 @@ export default class HelloWorld extends Vue {
   margin-top:auto;
   margin-bottom:auto;
   padding:5px;
-  height:50px;
+  height:60px;
 }
 
 .card {
