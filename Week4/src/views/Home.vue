@@ -55,4 +55,7 @@ export default class Home extends Vue {
 .cardsContainer {
   display:inline-block;
 }
+#displayButton a{
+  color:white;
+}
 </style>
