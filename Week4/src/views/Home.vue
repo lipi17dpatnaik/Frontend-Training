@@ -1,15 +1,15 @@
 <template>
   <div class="home">
-    <div id="viewbar">
+    <div class="viewbar">
       <div class="viewInfo">
         <div class="title"><h3>Products</h3></div>
-        <div class="info">View details of all your product</div>
+        <div class="info">An overview of all your products available in the Authentication Center</div>
       </div>
       <div class="statusMessage">
          <slot>{{ success }}</slot>
       </div>
       <div class="displayButton">
-        <router-link to="/create/new">Create Product</router-link>
+        <router-link to="/create/new">+ Create Product</router-link>
       </div>
     </div>
     <Card v-for="item in items" :key="item.bin" :card="item" :cardURL="utils.getLogoURL(data,item.cardNetwork)" :bgColor="utils.getLogoBgColor(data,item.cardNetwork)" />

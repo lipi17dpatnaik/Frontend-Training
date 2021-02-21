@@ -1,6 +1,6 @@
 <template>
-  <div class="basicInfo">
-    <div id="viewbar">
+  <div class="createOrEditForm">
+    <div class="viewbar">
       <div class="viewInfo">
         <div class="title"><h3>{{ createOrEditLabel }}</h3></div>
       </div>
@@ -11,38 +11,49 @@
       <hr />
       <form>
         <label for="prodName">Product Name</label>
-        <input type="text" id="prodName" name="prodName" v-model="card.name" :placeholder="card.name" required>
+        <input type="text" class="prodName" name="prodName" v-model="card.name" :placeholder="card.name" required>
         <label for="prodDesc">Description</label>
-        <input type="text" id="prodDesc" name="prodDesc" v-model="card.description" :placeholder="card.description">
+        <input type="text" class="prodDesc" name="prodDesc" v-model="card.description" :placeholder="card.description">
         <label for="bundleId">Key Bundle ID</label>
-        <select id="bundleId" name="bundleId" v-model="bundleId">
+        <select class="bundleId" name="bundleId" v-model="bundleId">
           <option value="bundleId1">Bundle ID 1</option>
           <option value="bundleId2">Bundle ID 2</option>
           <option value="bundleId3">Bundle ID 3</option>
         </select>
         <label for="cardNetwork">Card Network</label>
-        <select id="cardNetwork" name="cardNetwork" v-model="card.cardNetwork" :disabled="disabled" :placeholder="card.cardNetwork" required>
-          <option value="mastercard">Mastercard</option>
-          <option value="visa">VISA</option>
-          <option value="rupay">RuPay</option>
-          <option value="amex">American Express</option>
-          <option value="maestro">Maestro</option>
-        </select>
-        <label for="protVer">Protocol Version</label>
-        <select id="protVer" name="protVer" v-model="card.version" :placeholder="card.version" required>
-          <option value="threeDSecure_1_0">3DSecure1.0</option>
-          <option value="threeDSecure_2_0">3DSecure2.0</option>
-        </select>
-        <label for="aavAlgo">AAV Algorithm</label>
-        <select value="aavAlgo" name="aavAlgo">
-          <option value="algo1">Algorithm 1</option>
-          <option value="algo2">Algorithm 2</option>
-        </select>
+        <div class="cardNetworkAndLogo">
+          <div class="cardNetworkLogo" :style="{backgroundColor:logoBgColor}"><img :src="logoSrc"></div>
+          <div class="cardNetworkSelector">
+          <select class="cardNetwork" name="cardNetwork" v-model="card.cardNetwork" :disabled="disabled" :placeholder="card.cardNetwork" @change="setLogo()" required>
+            <option value="mastercard">Mastercard</option>
+            <option value="visa">VISA</option>
+            <option value="rupay">RuPay</option>
+            <option value="amex">American Express</option>
+            <option value="maestro">Maestro</option>
+          </select>
+          </div>
+        </div>
+        <div class="versionAlgo">
+        <div class="version">
+          <label for="protVer">Protocol Version</label>
+          <select class="protVer" name="protVer" v-model="card.version" :placeholder="card.version" required>
+            <option value="threeDSecure_1_0">3DSecure 1.0</option>
+            <option value="threeDSecure_2_0">3DSecure 2.0</option>
+          </select>
+        </div>
+        <div class="algo">
+          <label for="aavAlgo">AAV Algorithm</label>
+          <select value="aavAlgo" name="aavAlgo" class="aavAlgo">
+            <option value="algo1">Algorithm 1</option>
+            <option value="algo2">Algorithm 2</option>
+          </select>
+          </div>
+        </div>
         <label for="binNo">BIN No.</label>
-        <input type="number" id="binNo" name="binNo" v-model="card.bin" :disabled="disabled" :placeholder="card.bin" required>
+        <input type="number" class="binNo" name="binNo" v-model="card.bin" :disabled="disabled" :placeholder="card.bin" required>
         <br/>
-        <input type="submit" value="Submit" id="submit" @click="saveValues">
-        <input type="submit" value="Cancel" id="cancel" @click="goToHome">
+        <input type="submit" value="Submit" class="submit" @click="saveValues">
+        <input type="submit" value="Cancel" class="cancel" @click="goToHome">
         <div class="errorSection"></div>
       </form>
     </div>
@@ -63,19 +74,24 @@ export default class BasicInformation  extends UtilityMixin{
   private data:Types.jsonData;
   private utils:UtilityMixin = new UtilityMixin();
   private createOrEditLabel!:string;
+  private logoBgColor!:string;
+  private logoSrc!:string;
+  setLogo(){
+    this.logoSrc = this.data.cardNetworkLogos[this.card.cardNetwork]["logoURL"];
+    this.logoBgColor = this.data.cardNetworkLogos[this.card.cardNetwork]["logoBgColor"];
+  }
   created(){
     this.data = this.utils.getJSONData();
     this.utils.addLoader(".productForm",1); 
     if (this.createOrEdit === "true") { 
       this.createOrEditLabel="Create Product";
       this.disabled= false;
-      console.log(this.utils.generateRandomProductID());
       this.card = {id:this.utils.generateRandomProductID(),
-                   name:"",
+                   name:"Product name",
                    bin:123,
-                   cardNetwork:"",
-                   description:"",
-                   version:"",
+                   cardNetwork:"rupay",
+                   description:"Product description",
+                   version:"threeDSecure_1_0",
                    config: {connectorURL: "Not available"}
                    };
     }
@@ -83,6 +99,8 @@ export default class BasicInformation  extends UtilityMixin{
       this.createOrEditLabel = "Edit Product";
       this.disabled=true;
     }
+    this.logoSrc = this.data.cardNetworkLogos[this.card.cardNetwork]["logoURL"];
+    this.logoBgColor = this.data.cardNetworkLogos[this.card.cardNetwork]["logoBgColor"];
   }
   displayFormResult(msg:string,error:boolean):number{
     console.log(msg);
@@ -165,7 +183,30 @@ export default class BasicInformation  extends UtilityMixin{
 <style scoped lang="scss">
 .productForm {
   display:none;
+  float:left;
+  margin:20px;
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  border:1px solid #4d4ddc;;
+  border-radius:10px;
+  width:98%;
 }
+
+.cardNetworkAndLogo{
+  display:flex;
+  flex-direction:row;
+}
+
+.versionAlgo{
+  display:flex;
+  flex-direction:row;
+  div{
+    padding-right:10%;
+    select{
+      width:150%;
+    }
+  }
+}
+
 .errorSection {
   display:none;
 }
@@ -182,11 +223,83 @@ a {
 }
 form {
   text-align:left;
-  padding:5px;
+  padding:20px;
 
   label {
     display:block;
     text-align:left;
   }
+
+  input,select{
+    margin:10px 0 10px 0;
+    width:15%;
+    height:20px;
+    font-family:oswald;
+    font-size:14px;
+  }
+
+  input[disabled],select[disabled]{
+    cursor:not-allowed;
+  }
 }
+
+h2,h4{
+  text-align:left;
+  margin-left:20px;
+}
+
+.prodDesc {
+  width:30%;
+  height:80px;
+}
+
+.submit,.cancel {
+  width:10%;
+  height:30px;
+  background-color:#4d4ddc;
+  color:white;
+  border-color:#4d4ddc;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.submit:hover, .cancel:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.cancel {
+  margin-left:20px;
+  background-color:#80808029;
+  color:black;
+  border-color:#80808029;
+}
+
+img {
+  height: auto;
+  max-height:50px;
+  width: 100px;
+  vertical-align: middle;
+}
+
+.cardNetworkAndLogo{
+  padding:10px 0 10px 0;
+  vertical-align:middle;
+}
+
+.cardNetworkLogo{
+  border-radius:10px;
+  height:50px;
+  line-height:50px;
+  width: 100px;
+  text-align: center;
+}
+
+.cardNetworkSelector{
+  select{
+    height:50px;
+    margin:0px 0px 0px 5px;
+    width:60%;
+  }
+}
+
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="topbar">
+    <div class="topbar">
       <div>
         <h3><router-link to="/">zeta</router-link></h3>
       </div>
@@ -14,7 +14,7 @@
 
 <style lang="scss">
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: oswald;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -26,7 +26,7 @@ body {
   background:#f3f3f3;
 }
 
-#viewbar{
+.viewbar{
   background:#4d4ddc;
   overflow:hidden;
   margin-left:5px;
@@ -54,6 +54,15 @@ body {
     margin-left:auto;
     margin-top:auto;
     margin-bottom:auto;
+
+    a {
+      border:2px solid white;
+      padding:8px;
+    }
+
+    a:hover {
+      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
   }
 
   a {
@@ -62,7 +71,7 @@ body {
   }
 }
 
-#topbar {
+.topbar {
   background:#31353a;
   overflow:hidden;
   margin-left:auto;
@@ -80,7 +89,6 @@ body {
   h4 {
     margin-block-start:5px;
     margin-block-end:5px;
-    font-family:oswald;
     font-weight:normal;
   }
 

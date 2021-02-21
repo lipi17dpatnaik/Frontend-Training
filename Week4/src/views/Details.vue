@@ -1,9 +1,9 @@
 <template>
   <div class="about">
-    <div id="viewbar">
+    <div class="viewbar">
       <div class="viewInfo">
-	<div class="title"><h3>View Details</h3></div>
-        <div class="info">Details of your product ID: {{ item.id }}</div>
+	<div class="title"><h3>{{ item.name }}</h3></div>
+        <div class="info">{{ item.description }}</div>
 	</div>
       <div class="displayButton">
         <router-link :to="{ name: 'Edit', params:{bin: item.bin}}">Edit Product</router-link>

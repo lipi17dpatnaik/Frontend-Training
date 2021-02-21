@@ -60,6 +60,8 @@ h1 {
   font-weight:normal;
   padding:5px;
   font-size:1.2em;
+  a { color: black;}
+  a:hover {color: #4d4ddc;}
 }
 h2{
   text-align:left;
