@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import data from "@/assets/cards.json";
+import UtilityMixin from "@/utils.ts";
 
 Vue.config.productionTip = false;
 Vue.config.silent=true;

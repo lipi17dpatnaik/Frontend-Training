@@ -5,31 +5,31 @@
       <table style="width:100%">
         <tr>
           <td>Product Name</td>
-          <td>{{ prodName }}</td>
+          <td>{{ card.name }}</td>
         </tr>
         <tr>
           <td>Product ID</td>
-          <td>{{ prodID }}</td>
+          <td>{{ card.id }}</td>
         </tr>
         <tr>
           <td>Description</td>
-          <td>{{ prodDesc }}</td>
+          <td>{{ card.description }}</td>
         </tr>
         <tr>
           <td>BIN Number</td>
-          <td>{{ prodBIN }}</td>
+          <td>{{ card.bin }}</td>
         </tr>
         <tr>
           <td>Connector URL</td>
-          <td>{{ prodConnURL }}</td>
+          <td>{{ card.config.connectorURL  }}</td>
         </tr>
         <tr>
           <td>Card Network</td>
-          <td><img :src="cardLogoURL" :style="{backgroundColor:bgColor}"> {{ prodCardType }}</td>
+          <td><img :src="cardLogoURL" :style="{backgroundColor:bgColor}"> {{ card.cardNetwork }}</td>
         </tr>
         <tr>
           <td>Protocol Version</td>
-          <td>{{ prodProt }}</td>
+          <td>{{ card.version }}</td>
         </tr>
       </table>
     </div>
@@ -38,18 +38,13 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import { Types } from "types/types";
 
 @Component
 export default class BasicInformation  extends Vue {
-  @Prop() private prodName!: string;
-  @Prop() private prodID!:string;
-  @Prop() private prodDesc!:string;
-  @Prop() private prodBIN!:number;
-  @Prop() private prodConnURL!:string;
   @Prop() private cardLogoURL!:string;
-  @Prop() private prodCardType!:string;
-  @Prop() private prodProt!:string;
   @Prop() private bgColor!:string;
+  @Prop() private card!:Types.Product;
 }
 </script>
 
@@ -65,6 +60,11 @@ tr {
 
 a {
   text-decoration:none;
+}
+
+.basicInfo
+{
+  display:none;
 }
 
 </style>

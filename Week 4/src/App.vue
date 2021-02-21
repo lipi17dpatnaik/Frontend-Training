@@ -40,12 +40,14 @@ body {
   color: #f2f2f2;
   text-align:left;
   border-radius:10px;
-  color: white;
-
 
   .viewinfo {
     flex-direction:column;
     margin-right:auto;
+  }
+
+  .statusMessage{
+    margin:auto;
   }
 
   .displayButton {
@@ -56,7 +58,7 @@ body {
 
   a {
     text-decoration:none;
-    color: white;
+    color:white;
   }
 }
 

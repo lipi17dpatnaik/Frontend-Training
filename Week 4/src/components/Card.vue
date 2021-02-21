@@ -5,32 +5,28 @@
         <div class="cardLogo"><img :src="cardURL" :alt="cardType">
 </div>
       </div>
-      <h1 v-on:click="persist">{{ msg }}</h1>
-      <h2><span>{{ prodNo }}</span></h2>
-      <h3>BIN-{{ binNo }}</h3>
+      <h1>
+        <router-link :to="{name:'Details', params:{bin:card.bin}}">
+          {{ card.name }}
+        </router-link>
+      </h1>
+      <h2><span>{{ card.id }}</span></h2>
+      <h3>BIN-{{ card.bin }}</h3>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import UtilityMixin from "@/utils.ts";
+import { Types } from "@/types/types";
 
 @Component
-export default class Cards extends Vue {
-  @Prop() private msg!: string;
-  @Prop() private prodNo!:string;
-  @Prop() private binNo!:number;
-  @Prop() private cardType!:string;
+export default class Card extends Vue {
+  private utils:UtilityMixin = new UtilityMixin();
+  @Prop() private card!:Types.Product;
   @Prop() private cardURL!:string;
   @Prop() private bgColor!:string;
-  @Prop() private itemIndex!:number;
-  public persist():void {
-    localStorage.removeItem('selectedProd');
-    localStorage.removeItem('selectedIndex');
-    localStorage.selectedProd = this.prodNo;
-    localStorage.selectedIndex = this.itemIndex;
-    this.$router.push("/details");
-  };
 }
 </script>
 

@@ -6,12 +6,14 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
+    path: "/:success?",
+    props:true,
     name: "Home",
     component: Home
   },
   {
-    path: "/details",
+    path: "/details/:bin",
+    props:true,
     name: "Details",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -20,13 +22,14 @@ const routes: Array<RouteConfig> = [
       import(/* webpackChunkName: "details" */ "../views/Details.vue")
   },
   {
-    path: "/create",
+  path: "/create/new",
     name: "Create",
     component: () =>
-      import(/* webpackChunkName: "details" */ "../views/Create.vue")
+    import(/* webpackChunkName: "details" */ "../views/Create.vue")
   },
   {
-    path: "/edit",
+    path: "/edit/:bin",
+    props: true,
     name: "Edit",
     component: () =>
       import(/* webpackChunkName: "details" */ "../views/Edit.vue")

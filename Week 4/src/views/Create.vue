@@ -1,6 +1,6 @@
 <template>
   <div class="create">
-    <CreateEditProduct createOrEdit="Create Product" />
+    <CreateEditProduct createOrEdit=true />
   </div>
 </template>
 
