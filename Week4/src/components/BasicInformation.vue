@@ -41,7 +41,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import { Types } from "types/types";
+import { Types } from "@/types/types";
+import { getJSONData, getLogoURL, getLogoBgColor } from "@/utils.ts";
 
 @Component
 export default class BasicInformation  extends Vue {
@@ -50,6 +51,9 @@ export default class BasicInformation  extends Vue {
   @Prop() private card!:Types.Product;
   private protVersion!:string;
   created(){
+    this.data = getJSONData();
+    this.cardLogoURL = getLogoURL(this.data,this.card.cardNetwork);
+    this.bgColor = getLogoBgColor(this.data,this.card.cardNetwork);
     if (this.card.version === "threeDSecure_1_0"){
       this.protVersion = "3DSecure 1.0";
     } else{

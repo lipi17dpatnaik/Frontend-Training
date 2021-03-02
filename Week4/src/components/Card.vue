@@ -18,15 +18,20 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import UtilityMixin from "@/utils.ts";
 import { Types } from "@/types/types";
+import { getJSONData, getLogoURL, getLogoBgColor } from "@/utils.ts";
 
 @Component
 export default class Card extends Vue {
-  private utils:UtilityMixin = new UtilityMixin();
   @Prop() private card!:Types.Product;
-  @Prop() private cardURL!:string;
-  @Prop() private bgColor!:string;
+  private cardURL!:string;
+  private bgColor!:string;
+  private data!:Types.jsonData;
+  created(){
+    this.data = getJSONData();
+    this.cardURL = getLogoURL(this.data,this.card.cardNetwork);
+    this.bgColor = getLogoBgColor(this.data,this.card.cardNetwork);
+  }
 }
 </script>
 

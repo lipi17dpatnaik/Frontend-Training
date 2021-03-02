@@ -10,7 +10,7 @@
       <h4>Enter the basic details about your product</h4>
       <hr />
       <form>
-        <label for="prodName">Product Name</label>
+        <label for="prodName">Product Name*</label>
         <input type="text" class="prodName" name="prodName" v-model="card.name" :placeholder="card.name" required>
         <label for="prodDesc">Description</label>
         <input type="text" class="prodDesc" name="prodDesc" v-model="card.description" :placeholder="card.description">
@@ -20,7 +20,7 @@
           <option value="bundleId2">Bundle ID 2</option>
           <option value="bundleId3">Bundle ID 3</option>
         </select>
-        <label for="cardNetwork">Card Network</label>
+        <label for="cardNetwork">Card Network*</label>
         <div class="cardNetworkAndLogo">
           <div class="cardNetworkLogo" :style="{backgroundColor:logoBgColor}"><img :src="logoSrc"></div>
           <div class="cardNetworkSelector">
@@ -35,7 +35,7 @@
         </div>
         <div class="versionAlgo">
         <div class="version">
-          <label for="protVer">Protocol Version</label>
+          <label for="protVer">Protocol Version*</label>
           <select class="protVer" name="protVer" v-model="card.version" :placeholder="card.version" required>
             <option value="threeDSecure_1_0">3DSecure 1.0</option>
             <option value="threeDSecure_2_0">3DSecure 2.0</option>
@@ -49,13 +49,14 @@
           </select>
           </div>
         </div>
-        <label for="binNo">BIN No.</label>
+        <label for="binNo">BIN No.*</label>
         <input type="number" class="binNo" name="binNo" v-model="card.bin" :disabled="disabled" :placeholder="card.bin" required>
         <br/>
-        <input type="submit" value="Submit" class="submit" @click="saveValues">
+        <input type="submit" value="Submit" class="submit" @click.prevent="saveValues">
         <input type="submit" value="Cancel" class="cancel" @click="goToHome">
         <div class="errorSection"></div>
       </form>
+      <h4>* - Mandatory fields</h4>
     </div>
   </div>
 </template>
@@ -63,16 +64,15 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 import data from "@/assets/cards.json";
-import UtilityMixin from "@/utils.ts";
+import { getJSONData, filterItem, addLoader, generateRandomProductID, getIndex } from "@/utils.ts";
 import { Types } from "@/types/type";
 
 @Component
-export default class BasicInformation  extends UtilityMixin{
+export default class BasicInformation  extends Vue{
   @Prop() private card!:Types.Product;
   @Prop() private createOrEdit!:boolean; // true -> create, false -> edit
   private disabled!:boolean;
   private data:Types.jsonData;
-  private utils:UtilityMixin = new UtilityMixin();
   private createOrEditLabel!:string;
   private logoBgColor!:string;
   private logoSrc!:string;
@@ -81,12 +81,14 @@ export default class BasicInformation  extends UtilityMixin{
     this.logoBgColor = this.data.cardNetworkLogos[this.card.cardNetwork]["logoBgColor"];
   }
   created(){
-    this.data = this.utils.getJSONData();
-    this.utils.addLoader(".productForm",1); 
-    if (this.createOrEdit === "true") { 
+    this.data = getJSONData();
+    addLoader(".productForm",1);
+    this.createOrEdit = JSON.parse(this.createOrEdit);
+    console.log(typeof this.createOrEdit); 
+    if (this.createOrEdit === true) { 
       this.createOrEditLabel="Create Product";
       this.disabled= false;
-      this.card = {id:this.utils.generateRandomProductID(),
+      this.card = {id:generateRandomProductID(),
                    name:"Product name",
                    bin:123,
                    cardNetwork:"rupay",
@@ -106,7 +108,7 @@ export default class BasicInformation  extends UtilityMixin{
     console.log(msg);
     console.log(error);
     const errorSection = document.getElementsByClassName("errorSection")[0];
-    this.utils.addLoader(".errorSection",1,"block");
+    addLoader(".errorSection",1,"block");
     errorSection.style.display = "none";
     if (error===true)
     {
@@ -124,7 +126,11 @@ export default class BasicInformation  extends UtilityMixin{
       this.displayFormResult("Product name cannot be empty",true);
       return -1;
     }
-    if ((this.utils.getIndex(this.data,String(this.card.bin)) !== -1) && (this.createOrEdit == "true")){
+    if (this.card.bin === "") {
+      this.displayFormResult("BIN no. cannot be empty",true);
+      return -1;
+    }
+    if ((getIndex(this.data,this.card.bin) !== -1) && (this.createOrEdit === true)){
       this.displayFormResult("Please enter a unique BIN",true);
       return -1;
     }
@@ -139,10 +145,9 @@ export default class BasicInformation  extends UtilityMixin{
     return 0;
   }
   saveValues():void{
-    console.log(this.createOrEdit);
     const index = this.formValidation();
     if (index === 0){
-      if (this.createOrEdit === "true"){
+      if (this.createOrEdit === true){
         // save JSON data
         this.data.products.push(this.card);
         const newData = JSON.stringify(this.data);
@@ -150,7 +155,7 @@ export default class BasicInformation  extends UtilityMixin{
         this.goToHome(true);
       }
       else{
-        const indexItem = this.utils.getIndex(this.data,this.card.bin);
+        const indexItem = getIndex(this.data,this.card.bin);
         this.data.products[indexItem] = {id:this.card.id,
                         name:this.card.name,
                         bin:this.card.bin,
@@ -170,7 +175,7 @@ export default class BasicInformation  extends UtilityMixin{
     if (success===true){
       this.$router.push({
         name:"Home",
-        params: { success: true }
+        params: { success: "true" }
       });
     } else {
       this.$router.push("/");
