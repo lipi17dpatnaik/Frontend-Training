@@ -16,7 +16,7 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import BasicInformation from "@/components/BasicInformation.vue";
-import { getJSONData, filterItem, addLoader, getLogoURL, getLogoBgColor } from "@/utils.ts";
+import { getJSONData, filterItem, getLogoURL, getLogoBgColor } from "@/utils.ts";
 import { Types } from "@/types/types";
 
 @Component({
@@ -30,7 +30,6 @@ export default class About extends Vue {
   private item!:Types.Product;
   created(){
     this.data = getJSONData();
-    addLoader(".basicInfo",1);
     this.item = filterItem(this.data,this.$route.params.bin);
   }
 }

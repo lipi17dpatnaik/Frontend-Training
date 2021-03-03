@@ -5,7 +5,8 @@
         <div class="title"><h3>{{ createOrEditLabel }}</h3></div>
       </div>
     </div>
-    <div class="productForm">
+    <loading-overlay :active="!loaded" v-if="!formLoaded" :loader="spinner" />
+    <div class="productForm" v-else>
       <h2>Basic Information</h2>
       <h4>Enter the basic details about your product</h4>
       <hr />
@@ -16,20 +17,14 @@
         <input type="text" class="prodDesc" name="prodDesc" v-model="card.description" :placeholder="card.description">
         <label for="bundleId">Key Bundle ID</label>
         <select class="bundleId" name="bundleId" v-model="bundleId">
-          <option value="bundleId1">Bundle ID 1</option>
-          <option value="bundleId2">Bundle ID 2</option>
-          <option value="bundleId3">Bundle ID 3</option>
+          <option v-for="bundle in bundleIDOptions" :key="bundle.value" :value="bundle.value">{{ bundle.name }}</option>
         </select>
         <label for="cardNetwork">Card Network*</label>
         <div class="cardNetworkAndLogo">
           <div class="cardNetworkLogo" :style="{backgroundColor:logoBgColor}"><img :src="logoSrc"></div>
           <div class="cardNetworkSelector">
           <select class="cardNetwork" name="cardNetwork" v-model="card.cardNetwork" :disabled="disabled" :placeholder="card.cardNetwork" @change="setLogo()" required>
-            <option value="mastercard">Mastercard</option>
-            <option value="visa">VISA</option>
-            <option value="rupay">RuPay</option>
-            <option value="amex">American Express</option>
-            <option value="maestro">Maestro</option>
+            <option v-for="cardNet in Object.keys(data.cardNetworkLogos)" :key="cardNet" :value="cardNet">{{ cardNet }}</option>
           </select>
           </div>
         </div>
@@ -37,15 +32,13 @@
         <div class="version">
           <label for="protVer">Protocol Version*</label>
           <select class="protVer" name="protVer" v-model="card.version" :placeholder="card.version" required>
-            <option value="threeDSecure_1_0">3DSecure 1.0</option>
-            <option value="threeDSecure_2_0">3DSecure 2.0</option>
+            <option v-for="protocol in protVerOptions" :key="protocol.value" :value="protocol.value">{{ protocol.name }}</option>
           </select>
         </div>
         <div class="algo">
           <label for="aavAlgo">AAV Algorithm</label>
           <select value="aavAlgo" name="aavAlgo" class="aavAlgo">
-            <option value="algo1">Algorithm 1</option>
-            <option value="algo2">Algorithm 2</option>
+            <option v-for="algo in algoOptions" :key="algo.value" value="algo.value">{{ algo.name }}</option>
           </select>
           </div>
         </div>
@@ -76,15 +69,24 @@ export default class BasicInformation  extends Vue{
   private createOrEditLabel!:string;
   private logoBgColor!:string;
   private logoSrc!:string;
+  private formLoaded=false;
+  private bundleIDOptions = [{name:"Bundle ID 1",value:"bundleId1"},
+			     {name:"Bundle ID 2",value:"bundleId2"},
+			     {name:"Bundle ID 3",value:"bundleId3"}];
+  private protVerOptions = [{name:"3DSecure 1.0",value:"threeDSecure_1_0"},
+			     {name:"3DSecure 2.0",value:"threeDSecure_2_0"}];
+  private algoOptions = [{name:"Algorithm 1",value:"algo1"},
+		         {name:"Algorithm 2",value:"algo2"}];
   setLogo(){
     this.logoSrc = this.data.cardNetworkLogos[this.card.cardNetwork]["logoURL"];
     this.logoBgColor = this.data.cardNetworkLogos[this.card.cardNetwork]["logoBgColor"];
   }
   created(){
     this.data = getJSONData();
-    addLoader(".productForm",1);
+    setTimeout(() => {
+      this.formLoaded = true;
+    },1*1000);
     this.createOrEdit = JSON.parse(this.createOrEdit);
-    console.log(typeof this.createOrEdit); 
     if (this.createOrEdit === true) { 
       this.createOrEditLabel="Create Product";
       this.disabled= false;
@@ -104,9 +106,7 @@ export default class BasicInformation  extends Vue{
     this.logoSrc = this.data.cardNetworkLogos[this.card.cardNetwork]["logoURL"];
     this.logoBgColor = this.data.cardNetworkLogos[this.card.cardNetwork]["logoBgColor"];
   }
-  displayFormResult(msg:string,error:boolean):number{
-    console.log(msg);
-    console.log(error);
+  displayFormResult(msg:string,error:boolean):void{
     const errorSection = document.getElementsByClassName("errorSection")[0];
     addLoader(".errorSection",1,"block");
     errorSection.style.display = "none";
@@ -187,11 +187,11 @@ export default class BasicInformation  extends Vue{
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .productForm {
-  display:none;
+  display:inline-block;
   float:left;
   margin:20px;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-  border:1px solid #4d4ddc;;
+  border:1px solid #4d4ddc;
   border-radius:10px;
   width:98%;
 }
@@ -233,14 +233,17 @@ form {
   label {
     display:block;
     text-align:left;
+    font-weight:bold;
+    color:black;
   }
 
   input,select{
     margin:10px 0 10px 0;
     width:15%;
     height:20px;
-    font-family:oswald;
+    /*font-family:oswald;*/
     font-size:14px;
+    color:#666666;
   }
 
   input[disabled],select[disabled]{

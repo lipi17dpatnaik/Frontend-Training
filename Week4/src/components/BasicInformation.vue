@@ -1,5 +1,7 @@
 <template>
-  <div class="basicInfo">
+  <div>
+   <loading-overlay :active="!loaded" v-if="!loaded" :loader="spinner" />
+   <div class="basicInfo" v-else>
     <h2>Basic Information</h2>
     <div class="tableCardInfo">
       <table>
@@ -37,6 +39,7 @@
       </table>
     </div>
   </div>
+ </div>
 </template>
 
 <script lang="ts">
@@ -50,7 +53,11 @@ export default class BasicInformation  extends Vue {
   @Prop() private bgColor!:string;
   @Prop() private card!:Types.Product;
   private protVersion!:string;
+  private loaded=false;
   created(){
+    setTimeout(() => {
+      this.loaded = true;
+    },2*1000);
     this.data = getJSONData();
     this.cardLogoURL = getLogoURL(this.data,this.card.cardNetwork);
     this.bgColor = getLogoBgColor(this.data,this.card.cardNetwork);
@@ -103,17 +110,21 @@ a {
 {
   text-align:left;
   margin-left:10px;
+  margin-top:10px;
   float:left;
-  display:none;
+  display:inline-block;
   h2 {
-    color:#4d4ddc;
-    font-weight:normal;
+/*    color:#4d4ddc;*/
+    font-weight:bold;
   }
   table {
     width:100%;
     color:gray;
   }
   width:95%;
+  border-radius:10px;
+  border:2px solid #4d4ddc;
+  padding-left:5px;
 }
 
 </style>

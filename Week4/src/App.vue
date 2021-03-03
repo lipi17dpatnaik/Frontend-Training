@@ -14,16 +14,16 @@
 
 <style lang="scss">
 #app {
-  font-family: oswald;
+  font-family: sans-serif, oswald;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #666666; /*#2c3e50;*/
 }
 
 body {
   margin:0px;
-  background:#f3f3f3;
+  background:white;/*#f3f3f3;*/
 }
 
 .viewbar{
@@ -56,7 +56,7 @@ body {
     margin-bottom:auto;
 
     a {
-      border:2px solid white;
+      border:1px solid white;
       padding:8px;
     }
 
@@ -89,7 +89,7 @@ body {
   h4 {
     margin-block-start:5px;
     margin-block-end:5px;
-    font-weight:normal;
+    /*font-weight:normal;*/
   }
 
   div {

@@ -12,7 +12,10 @@
         <router-link to="/create/new">+ Create Product</router-link>
       </div>
     </div>
-    <Card v-for="item in items" :key="item.bin" :card="item" />
+    <loading-overlay :active="!loaded" v-if="!loaded" :loader="spinner" />
+    <div class="cardsContainerHome" v-else>
+      <Card v-for="item in items" :key="item.bin" :card="item" />
+    </div>
   </div>
 </template>
 
@@ -20,7 +23,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import Card from "@/components/Card.vue"; // @ is an alias to /sric
 import { Types } from "@/types/types";
-import { addLoader, getJSONData, getLogoBgColor, getLogoURL } from "@/utils.ts"; 
+import { getJSONData, getLogoBgColor, getLogoURL } from "@/utils.ts"; 
 
 @Component({
   components: {
@@ -33,8 +36,11 @@ export default class Home extends Vue{
   private data!:Types.jsonData;
   private success = this.$route.params.success;
   getLogoBgColor;
+  private loaded = false;
   created(){
-    addLoader(".cardsContainer",1.5);
+    setTimeout(() => {
+      this.loaded = true;
+    },2*1000);
     this.data = getJSONData();
     this.items = this.data.products;
     if (typeof(this.success)!=="undefined"){
@@ -50,7 +56,15 @@ export default class Home extends Vue{
 
 <style>
 .cardsContainer {
-  display:none;
+  display:inline-block;
+}
+
+.cardsContainerHome{
+ margin-left:5px;
+ margin-right:auto;
+ margin-top:10px;
+ position:relative;
+ text-align:left;
 }
 
 </style>

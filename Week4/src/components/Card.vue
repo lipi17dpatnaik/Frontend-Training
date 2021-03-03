@@ -42,6 +42,8 @@ export default class Card extends Vue {
   background:black;
   height:90px;
   display:flex;
+  border-top-right-radius:8px;
+  border-top-left-radius:8px;
 }
 
 .cardLogo{
@@ -54,18 +56,19 @@ export default class Card extends Vue {
 
 .card {
   border-radius:10px;
-  border: 2px solid black;
+  border: 2px solid #666666;
   padding:0px;
   width:400px;
   height:auto;
-  margin: 10px;
+  /*margin-left:1px;*/
+  margin: 12px 12px 12px 2px;
 }
 h1 {
   text-align: left;
   font-weight:normal;
   padding:5px;
   font-size:1.2em;
-  a { color: black;}
+  a {color: #666666}
   a:hover {color: #4d4ddc;}
 }
 h2{
@@ -73,7 +76,7 @@ h2{
   font-weight:normal;
   span {
     padding:2px;
-    background-color:#0000003b;
+    /*background-color:#0000003b;*/
   }
   padding:5px;
   font-size:1em;
